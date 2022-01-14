@@ -33,7 +33,6 @@
 const isProduction = process.env.NODE_ENV === "production";
 
 export default {
-    props : ["propsDeneme"],
     // created: function (){
     //     this.$root.on('giveRef', () => {return this.$refs.videoPlayer.player})
     // },

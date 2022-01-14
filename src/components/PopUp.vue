@@ -2,14 +2,6 @@
   <v-row class="position" justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-          <canvas
-            id="cnvs"
-            style="
-              background-color: green;
-              width: -webkit-fill-available;
-              height: 240px;
-            "
-          ></canvas>
         <v-btn
           color="primary"
           dark
@@ -37,14 +29,14 @@
           </v-container>
           <!-- EKRAN GÖRÜNTÜSÜ -->
 
-          <!-- <canvas
+          <canvas
             id="cnvs"
             style="
               background-color: green;
               width: -webkit-fill-available;
               height: 240px;
             "
-          ></canvas> -->
+          ></canvas>
           
           <!-- ------------------------- -->
           <br />
@@ -66,8 +58,6 @@
 </template>
 
 <script>
-// var fs = require("fs");
-
 
 export default {
   data: () => ({
@@ -82,6 +72,8 @@ export default {
       var vdi = this.$refs.videoPlayer.player;
       console.log(vdi);
       this.ctx.drawImage(vdi.children_[0], 0, 0, 300, 150);
+
+      initDraw(canvas, this.ctx);
     },
 
     //Kayıt
@@ -109,6 +101,58 @@ export default {
     },
   },
 };
+const $ = require('jquery');
+window.$ = $;
+
+function initDraw(canvas, ctx) {
+  var canvasx = $(canvas).offset().left;
+  var canvasy = $(canvas).offset().top;
+  var last_mousex = 0;
+  var last_mousey = 0;
+  var mousex = 0;
+  var mousey = 0;
+  var mousedown = false;
+
+  //Mousedown
+  $(canvas).on("mousedown", function(e) {
+    last_mousex = parseInt(e.clientX - canvasx);
+    last_mousey = parseInt(e.clientY - canvasy);
+    //x ve y koordinatları fotoğrafın sol üst köşesi 0 olacak şekilde belirlenmiştir.
+    console.log("X:",last_mousex," ","Y:",last_mousey);
+    // mousedown = true;
+    mousex = parseInt(e.clientX - canvasx);
+    mousey = parseInt(e.clientY - canvasy);
+    console.log(mousex,"",mousey);
+    ctx.beginPath();
+    var width = 25;
+    var height = 25;
+    ctx.rect(mousex, mousey, width, height);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  });
+
+  //Mouseup
+  $(canvas).on("mouseup", function() {
+    mousedown = false;
+  });
+
+  //Mousemove
+  $(canvas).on("mousemove", function(e) {
+    mousex = parseInt(e.clientX - canvasx);
+    mousey = parseInt(e.clientY - canvasy);
+    if (mousedown) {
+      ctx.beginPath();
+      var width = 25;
+      var height = 25;
+      ctx.rect(mousex, mousey, width, height);
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+  });
+}
+
 </script>
 
 <style scoped>

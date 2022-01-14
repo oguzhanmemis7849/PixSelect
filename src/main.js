@@ -10,6 +10,7 @@ import 'videojs-contrib-hls.js/src/videojs.hlsjs'
 import PopUp from './components/PopUp.vue'
 import Video from './components/Video.vue'
 
+
 Vue.config.productionTip = false
 Vue.use(VueVideoPlayer)
 
