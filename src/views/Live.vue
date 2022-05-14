@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <Video />
-    <PopUp />
+    <!-- <PopUp /> -->
   </v-container>
 </template>
 
